@@ -1,0 +1,7 @@
+- [Introduction](/)
+- [Architecture](architecture/)
+- [API communication](api/)
+- [Components](components/)
+- [Testing](testing/)
+- [Performance](performance/)
+- [Operations](operations/)
