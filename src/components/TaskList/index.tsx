@@ -126,7 +126,7 @@ export const TaskList = ({
                                         size="small"
                                         variant="outlined"
                                         icon={<ScheduleOutlinedIcon />}
-                                        label={`${formatCreationDate(task.createdAt)} ${formatCreationTime(task.createdAt)}`}
+                                        label={`${formatCreationDate(task.created_at)} ${formatCreationTime(task.created_at)}`}
                                         sx={{ flexShrink: 0 }}
                                     />
                                     <Typography

@@ -31,8 +31,8 @@ export const taskSchema = z.object({
     title: z.string(),
     description: z.string(),
     completed: z.boolean(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
+    created_at: z.string(),
+    updated_at: z.string(),
 });
 
 export const taskResponseSchema = z.object({ data: taskSchema });

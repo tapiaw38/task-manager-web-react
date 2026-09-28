@@ -35,6 +35,21 @@ Backend error envelope:
 | `taskService.complete(id, completed)` | `PATCH /api/tasks/{id}/complete` |
 | `taskService.remove(id)`              | `DELETE /api/tasks/{id}`         |
 
+Task responses use `snake_case` timestamps:
+
+```json
+{
+    "data": {
+        "id": "2c8d915b-6398-41e1-8896-396af606623a",
+        "title": "Buy milk",
+        "description": "Go to the supermarket",
+        "completed": false,
+        "created_at": "2026-09-27T10:05:00Z",
+        "updated_at": "2026-09-27T10:05:00Z"
+    }
+}
+```
+
 ## State flow
 
 `TasksPage` calls `useTask()`. The hook delegates to the Zustand store, which delegates to `ITaskService`.

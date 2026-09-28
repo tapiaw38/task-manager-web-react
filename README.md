@@ -127,6 +127,9 @@ It turns that into an `ApiError` carrying `code`, `message` and `status`. A
 network failure becomes an `ApiError` with code `NETWORK_ERROR`. Components never
 inspect status codes: they show the message the backend already produced.
 
+Task response timestamps use `created_at` and `updated_at`; Zod validates that
+wire contract before task data reaches the store.
+
 ## Tests
 
 ```bash

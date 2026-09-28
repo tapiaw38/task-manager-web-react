@@ -10,8 +10,8 @@ const buildTask = (index: number, overrides: Partial<Task> = {}): Task => ({
     title: `Task number ${index}`,
     description: `Description ${index}`,
     completed: false,
-    createdAt: '2026-09-27T10:05:00Z',
-    updatedAt: '2026-09-27T10:05:00Z',
+    created_at: '2026-09-27T10:05:00Z',
+    updated_at: '2026-09-27T10:05:00Z',
     ...overrides,
 });
 
