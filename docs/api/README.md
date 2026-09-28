@@ -26,11 +26,10 @@ Backend error envelope:
 
 ## Operations
 
-`src/services/tasks/taskService.ts` and `src/services/info/infoService.ts`:
+`src/services/tasks/taskService.ts`:
 
 | Service method                        | Request                          |
 | :------------------------------------ | :------------------------------- |
-| `infoService.get()`                   | `GET /api/info`                  |
 | `taskService.list()`                  | `GET /api/tasks`                 |
 | `taskService.create(payload)`         | `POST /api/tasks`                |
 | `taskService.complete(id, completed)` | `PATCH /api/tasks/{id}/complete` |

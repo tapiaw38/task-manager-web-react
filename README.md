@@ -71,12 +71,14 @@ requires a rebuild; restarting the container is not enough.
 
 ### Date format
 
-Dates are formatted with the native `Intl.DateTimeFormat`, no date library.
+Dates are formatted with `dayjs`, using its default English locale so the month
+abbreviation is always three letters, as `dd-mmm-yy` requires. Relying on the
+browser locale would break the format: `en-GB` renders September as `Sept` and
+`es-AR` as `sept`.
 
-The locale is pinned to `en-US` on purpose. It is the locale that yields the
-three letter month abbreviations the format requires: `en-GB` produces `Sept`
-and `es-AR` produces `sept`, both of which break `dd-mmm-yy`. Times are rendered
-in the browser timezone, so a task created at `23:30 UTC` reads as local time.
+An invalid date renders as an empty string rather than `Invalid Date`. Times are
+rendered in the browser timezone, so a task created at `23:30 UTC` reads as local
+time.
 
 ## Architecture
 
@@ -84,17 +86,16 @@ in the browser timezone, so a task created at `23:30 UTC` reads as local time.
 src/
   api/client.ts              fetch wrapper: base URL, headers and error mapping
 
+  schemas/task.ts            zod schemas: payload validation and response parsing
+
   services/
     tasks/taskService.ts     REST operations, behind ITaskService
-    info/infoService.ts
 
   stores/
     taskStore.ts             zustand store, receives the service by injection
-    infoStore.ts
 
   hooks/
     useTask.ts               binds the store to the snackbar feedback
-    useInfo.ts
 
   components/
     TaskList/                virtualized list with strikethrough and actions
@@ -103,8 +104,8 @@ src/
 
   pages/TasksPage.tsx        screen composition
 
-  types/                     contracts shared with the API
-  utils/                     validation, date formatting and error messages
+  types/task.ts              types inferred from the zod schemas
+  utils/                     date formatting and error messages
   test/                      setup, render helper and fetch mocks
 ```
 
