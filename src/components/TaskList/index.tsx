@@ -8,7 +8,7 @@ import { formatCreationDate, formatCreationTime } from '../../utils/formatDateTi
 import type { TaskListProps } from './types';
 
 const ROW_HEIGHT = 96;
-const VIEWPORT_HEIGHT = 520;
+const MAX_VIEWPORT_HEIGHT = 520;
 
 export const TaskList = ({
     tasks,
@@ -32,7 +32,7 @@ export const TaskList = ({
             role="list"
             aria-label="Tasks"
             sx={{
-                height: VIEWPORT_HEIGHT,
+                maxHeight: MAX_VIEWPORT_HEIGHT,
                 overflowY: 'auto',
                 borderRadius: 1,
                 border: '1px solid',
@@ -91,6 +91,7 @@ export const TaskList = ({
                                     sx={{
                                         textDecoration: task.completed ? 'line-through' : 'none',
                                         color: task.completed ? 'text.disabled' : 'text.primary',
+                                        overflowWrap: 'anywhere',
                                     }}
                                 >
                                     {task.title}
@@ -104,20 +105,41 @@ export const TaskList = ({
                                             textDecoration: task.completed
                                                 ? 'line-through'
                                                 : 'none',
+                                            overflowWrap: 'anywhere',
                                         }}
                                     >
                                         {task.description}
                                     </Typography>
                                 ) : null}
 
-                                <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                                <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    sx={{
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                        rowGap: 0.5,
+                                        minWidth: 0,
+                                    }}
+                                >
                                     <Chip
                                         size="small"
                                         variant="outlined"
                                         icon={<ScheduleOutlinedIcon />}
                                         label={`${formatCreationDate(task.createdAt)} ${formatCreationTime(task.createdAt)}`}
+                                        sx={{ flexShrink: 0 }}
                                     />
-                                    <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+                                    <Typography
+                                        variant="caption"
+                                        title={task.id}
+                                        sx={{
+                                            color: 'text.disabled',
+                                            minWidth: 0,
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
                                         id: {task.id}
                                     </Typography>
                                 </Stack>

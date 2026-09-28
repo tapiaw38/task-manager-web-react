@@ -5,16 +5,13 @@ import { TasksPage } from './TasksPage';
 import { renderWithProviders } from '../test/render';
 
 const mocks = vi.hoisted(() => ({
-    getInfo: vi.fn(),
     listTasks: vi.fn(),
     createTask: vi.fn(),
     completeTask: vi.fn(),
     deleteTask: vi.fn(),
-    useInfo: vi.fn(),
     useTask: vi.fn(),
 }));
 
-vi.mock('../hooks/useInfo', () => ({ useInfo: mocks.useInfo }));
 vi.mock('../hooks/useTask', () => ({ useTask: mocks.useTask }));
 
 const task = {
@@ -28,17 +25,10 @@ const task = {
 
 describe('TasksPage', () => {
     beforeEach(() => {
-        mocks.getInfo.mockReset();
         mocks.listTasks.mockReset();
         mocks.createTask.mockReset();
         mocks.completeTask.mockReset();
         mocks.deleteTask.mockReset();
-        mocks.useInfo.mockReturnValue({
-            data: { application: 'Task Manager Gateway', version: '1.0.0' },
-            isLoading: false,
-            isError: false,
-            getInfo: mocks.getInfo,
-        });
         mocks.useTask.mockReturnValue({
             tasks: [],
             total: 0,
@@ -55,10 +45,9 @@ describe('TasksPage', () => {
         });
     });
 
-    it('loads application metadata and tasks', () => {
+    it('loads tasks on mount', () => {
         renderWithProviders(<TasksPage />);
 
-        expect(mocks.getInfo).toHaveBeenCalledOnce();
         expect(mocks.listTasks).toHaveBeenCalledOnce();
         expect(screen.getByText('No tasks yet')).toBeInTheDocument();
     });

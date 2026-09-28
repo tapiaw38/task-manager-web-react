@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Chip, Container, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Container, Stack, Typography } from '@mui/material';
 
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { EmptyState } from '../components/EmptyState';
@@ -7,7 +7,6 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { Loading } from '../components/Loading';
 import { TaskForm } from '../components/TaskForm';
 import { TaskList } from '../components/TaskList';
-import { useInfo } from '../hooks/useInfo';
 import { useTask } from '../hooks/useTask';
 import type { Task } from '../types/task';
 import { getErrorMessage } from '../utils/errorMessage';
@@ -15,14 +14,8 @@ import { getErrorMessage } from '../utils/errorMessage';
 export const TasksPage = () => {
     const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
-    const info = useInfo();
     const tasks = useTask();
-    const getInfo = info.getInfo;
     const listTasks = tasks.listTasks;
-
-    useEffect(() => {
-        void getInfo();
-    }, [getInfo]);
 
     useEffect(() => {
         void listTasks();
@@ -44,24 +37,9 @@ export const TasksPage = () => {
 
     return (
         <Container maxWidth="md" sx={{ paddingY: 4 }}>
-            <Stack spacing={1} sx={{ marginBottom: 3 }}>
-                <Typography variant="h4" component="h1">
-                    Task Manager
-                </Typography>
-                <Box>
-                    {info.isLoading ? (
-                        <Chip size="small" label="Gateway version: loading..." />
-                    ) : info.isError ? (
-                        <Chip size="small" color="error" label="Gateway version: unavailable" />
-                    ) : (
-                        <Chip
-                            size="small"
-                            color="success"
-                            label={`Gateway version: ${info.data?.version}`}
-                        />
-                    )}
-                </Box>
-            </Stack>
+            <Typography variant="h4" component="h1" sx={{ marginBottom: 3 }}>
+                Task Manager
+            </Typography>
 
             <Card sx={{ marginBottom: 3 }}>
                 <CardContent>
