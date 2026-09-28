@@ -141,22 +141,29 @@ The virtual scroll is covered by rendering 500 tasks and asserting that fewer
 than half reach the DOM. Date formatting, strikethrough and the completion and
 deletion callbacks have their own tests.
 
-## Deploying to Firebase Hosting
+## Deployment to Firebase Hosting
+
+The frontend was deployed manually with Firebase CLI. There is no continuous
+deployment workflow for Firebase Hosting in this challenge.
 
 ```bash
-pnpm build
-
 firebase login
+firebase use YOUR_FIREBASE_PROJECT_ID
+
+VITE_API_URL=https://GATEWAY_URL pnpm build
 firebase deploy --only hosting
 ```
 
 `VITE_API_URL` must point at the deployed gateway **before** running
 `pnpm build`, because Vite inlines it into the bundle.
 
-`firebase.json` configures `dist` as the hosting directory and rewrites every route to `index.html` for the single-page application. `.firebaserc` targets `project-6f7bcba1-aac1-4997-b2c`.
+`firebase.json` configures `dist` as the hosting directory and rewrites every route to `index.html` for the single-page application. Set the Firebase project identifier in `.firebaserc` before deploying.
 
 The deployed origin must also be listed in the gateway `ALLOWED_ORIGINS`, or the
 browser blocks every request.
+
+Verify the deployed application at the Firebase Hosting URL returned by
+`firebase deploy --only hosting`.
 
 ## Documentation
 
